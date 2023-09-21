@@ -1,0 +1,99 @@
+<!DOCTYPE html>
+<html lang="en" data-bs-theme="light">
+<head>
+    <meta charset="UTF-8">
+    <title>Log In</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet"
+          integrity="sha384-T3c6CoIi6uLrA9TneNEoa7RxnatzjcDSCmG1MXxSR1GAsXEV/Dwwykc2MPK8M2HN" crossorigin="anonymous">
+</head>
+<body>
+<div class="log-in-reg-block container-md">
+    <form class="row g-3" action="/create_account" method="post" enctype="multipart/form-data">
+
+        <!-- First Name -->
+        <div class="col-md-6">
+            <label class="form-label">First Name</label>
+            <input type="text" class="form-control" name="first_name">
+            {% with messages = get_flashed_messages(category_filter=['first_name_err']) %}
+            {% if messages %}
+            <small class="form-text text-danger">{{ messages[0] }}</small>
+            {% endif %}
+            {% endwith %}
+        </div>
+
+        <!-- Last Name -->
+        <div class="col-md-6">
+            <label class="form-label">Last Name</label>
+            <input type="text" class="form-control" name="last_name">
+            {% with messages = get_flashed_messages(category_filter=['last_name_err']) %}
+            {% if messages %}
+            <small class="form-text text-danger">{{ messages[0] }}</small>
+            {% endif %}
+            {% endwith %}
+        </div>
+
+        <!-- Phone Number -->
+        <div class="col-md-6">
+            <label class="form-label">Phone Number</label>
+            <input type="number" max="9999999999" class="form-control" name="phone_number">
+            <!-- You can add a flash message category for phone number validation if needed -->
+        </div>
+
+        <!-- Email -->
+        <div class="col-md-6">
+            <label class="form-label">Email</label>
+            <input type="email" class="form-control" name="email">
+            {% with messages = get_flashed_messages(category_filter=['email_regex_err']) %}
+            {% if messages %}
+            <small class="form-text text-danger">{{ messages[0] }}</small>
+            {% endif %}
+            {% endwith %}
+        </div>
+
+        <!-- Profile Photo -->
+        <div class="col-12">
+            <label class="form-label">Profile Photo</label>
+            <input type="file" class="form-control" accept="image/*" name="profile_img">
+            {% with messages = get_flashed_messages(category_filter=['profile_img_err']) %}
+            {% if messages %}
+            <small class="form-text text-danger">{{ messages[0] }}</small>
+            {% endif %}
+            {% endwith %}
+        </div>
+
+        <!-- Password -->
+        <div class="col-md-6">
+            <label class="form-label">Password</label>
+            <input type="password" class="form-control" name="password">
+            {% with messages = get_flashed_messages(category_filter=['short_password_err', 'password_regex_err']) %}
+            {% if messages %}
+            <small class="form-text text-danger">{{ messages[0] }}</small>
+            {% endif %}
+            {% endwith %}
+        </div>
+
+        <!-- Confirm Password -->
+        <div class="col-md-6">
+            <label class="form-label">Confirm Password</label>
+            <input type="password" class="form-control" name="confirm_password">
+            {% with messages = get_flashed_messages(category_filter=['password_match_err']) %}
+            {% if messages %}
+            <small class="form-text text-danger">{{ messages[0] }}</small>
+            {% endif %}
+            {% endwith %}
+        </div>
+
+        <!-- Submit Button -->
+        <div class="signup-log-in">
+            <div class="col-md-6">
+                <button type="submit" class="btn btn-primary">Create Account</button>
+            </div>
+            <div class="col-md-6">
+                <span><a href="/log_in">Already a user?</a></span>
+            </div>
+        </div>
+    </form>
+</div>
+</body>
+</html>
