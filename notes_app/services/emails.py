@@ -15,7 +15,18 @@ class EmailSender:
         )
 
     @staticmethod
-    def send_requested_note(email, note):
-        # todo: add method to send selected note to requesting user
-        pass
+    def send_requested_note(email, title, description, body):
+        send_note = SendGridMailer()
+        send_note.send_email(
+            to_email=email,
+            template_id='d-bc5ec32784b542b3b61cc8830cee0c78',
+            dynamic_template_data={
+                "title": title,
+                "description": description,
+                "body": body
+            }
+        )
 
+
+# send1 = EmailSender()
+# send1.send_requested_note('carlos@nelo.co','title', 'description', 'body')

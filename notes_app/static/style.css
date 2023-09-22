@@ -101,9 +101,12 @@ input::-webkit-inner-spin-button {
     justify-content: space-evenly;
     align-items: center;
 }
-.cancelNote{
+.cancelNote, .sendNote{
     margin-left: 15px;
 }
 .display-body{
     white-space: pre-line;
+}
+.confirmEditNote, .confirmNote{
+    margin-right: 15px;
 }

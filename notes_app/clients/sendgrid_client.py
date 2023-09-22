@@ -37,4 +37,4 @@ class SendGridMailer:
 
 
 # send = SendGridMailer()
-# send.send_email('carlos@nelo.co', 'd-599f54359f394e21bac573a44d1aaaa0', {'first_name': 'popo'})
+# send.send_email('carlos@nelo.co', 'd-599f54359f394e21bac573a44d1aaaa0', {'first_name': 'Carlos'})

@@ -89,7 +89,7 @@ def log_user():
         'email': request.form['email'],
         'password': request.form['password']
     }
-
+    session['data'] = data
     if not User.log_in_check(data):
         return redirect("/log_in")
     else:

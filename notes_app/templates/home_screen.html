@@ -45,7 +45,7 @@
         </div>
 
         <div class="note-area col">
-        <!--  note creatinion / edit / display renders here  -->
+            <!--  note creatinion / edit / display renders here  -->
         </div>
 
         <div class="bottom-nav nav justify-content-end">
@@ -56,7 +56,7 @@
                 </button>
             </form>
             <div class="d-flex log-out-button">
-                <button class="btn btn-outline-info">New note</button>
+                <button class="btn btn-outline-info" onclick="toggleTheme(this)">Theme</button>
             </div>
             <form class="d-flex log-out-button" role="search" name="log_out" action="/log_out" method="post">
                 <button class="btn btn-outline-danger" type="submit">Log out</button>
@@ -67,7 +67,7 @@
 </div>
 
 
-<!-- New Modal -->
+<!-- new folder modal -->
 <div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
     <div class="modal-dialog">
         <div class="modal-content">
@@ -89,6 +89,39 @@
         </div>
     </div>
 </div>
+
+<!-- new note email modal -->
+<div class="modal fade" id="noteEmailModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <form action="/send_note" method="post" id="sendNoteForm">
+                <div class="modal-body">
+                    <div class="mb-3">
+                        <label class="form-label">Email</label>
+                        <input type="email" class="form-control" name="email" required>
+                    </div>
+                    <div class="mb-3">
+                        <label class="form-label">Title</label>
+                        <input type="text" class="form-control" name="title" readonly>
+                    </div>
+                    <div class="mb-3">
+                        <label class="form-label">Description</label>
+                        <textarea class="form-control" name="description" rows="2" readonly></textarea>
+                    </div>
+                    <div class="mb-3">
+                        <label class="form-label">Body</label>
+                        <textarea class="form-control" name="body" rows="4" readonly></textarea>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                        <button type="submit" class="btn btn-primary" data-bs-dismiss="modal">Send</button>
+                    </div>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+
 <script src="{{ url_for('static', filename='script.js') }}"></script>
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"
         integrity="sha384-C6RzsynM9kWDrMNeT87bh95OGNyZPhcTNXj1NW7RuBCsyN/o0jlpcV8Qyq46cDfL"

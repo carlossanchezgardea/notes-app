@@ -1,6 +1,7 @@
 from notes_app import app
-from flask import request, session, jsonify
+from flask import request, session, jsonify, redirect
 from notes_app.models.note import Note
+from notes_app.services.emails import EmailSender
 
 
 @app.route("/create_note", methods=['POST'])
@@ -13,9 +14,9 @@ def new_note():
         'user_id': session['user_id'],
         'folder_id': request.form['folder_id']
     }
-    Note.create_note(data)
-    print(F"WE GET THIS {data}")
-    return ""
+
+    note_id = Note.create_note(data)
+    return jsonify({'note_id': note_id})
 
 
 @app.route("/api/load_notes")
@@ -57,3 +58,15 @@ def update_note():
     }
     Note.update_note(data)
     return 'should work?'
+
+
+@app.route("/send_note", methods=['POST'])
+def send_note():
+    email = request.form.get('email')
+    title = request.form.get('title')
+    description = request.form.get('description')
+    body = request.form.get('body')
+
+    EmailSender.send_requested_note(email, title, description, body)
+
+    return redirect("/home_page")
