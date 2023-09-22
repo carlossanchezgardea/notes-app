@@ -37,3 +37,23 @@ def get_single_note():
         'user_id': user_id
     }
     return jsonify(Note.get_one_note(data))
+
+
+@app.route("/api/update_note", methods=['POST'])
+def update_note():
+    note_id = request.form.get('note_id')
+    title = request.form.get('title')
+    description = request.form.get('description')
+    body = request.form.get('body')
+    user_id = session['user_id']
+    dtype = 'user_get'
+    data = {
+        'id': note_id,
+        'user_id': user_id,
+        'dtype': dtype,
+        'title': title,
+        'description': description,
+        'body': body
+    }
+    Note.update_note(data)
+    return 'should work?'

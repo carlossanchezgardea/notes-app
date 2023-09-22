@@ -15,7 +15,7 @@ async function fetchData(url) {
 async function updateNotesList(folderId = firstFolderId) {
     const notesContainer = document.querySelector('.note-list');
     notesContainer.innerHTML = '';
-git
+
     try {
         const notesData = await fetchData(`http://127.0.0.1:9000/api/load_notes?folder_id=${folderId}`);
 
@@ -161,15 +161,70 @@ async function showNoteDetails(noteId) {
         const title = noteData.title
         const description = noteData.description
         const body = noteData.body
-        noteDetailsContainer.innerHTML =`
-        <div class="new-notes">
-            <h1>${title}</h1>
-            <h4>${description}</h4>
-            <p class="display-body">${body}</p>
-        </div>  
-        `
-    }
-    catch (err) {
+        noteDetailsContainer.innerHTML = `
+                <div class="new-notes">
+                    <h1>${title}</h1>
+                    <h4>${description}</h4>
+                    <p class="display-body">${body}</p>
+                
+                    <div class="d-flex">
+                        <button class="btn btn-outline-info editNote">Edit Note</button>
+                    </div>
+                </div>  
+                `
+
+        const editButton = document.querySelector('.editNote');
+        editButton.addEventListener('click', (e) => {
+            e.preventDefault();
+            noteDetailsContainer.innerHTML = `
+                <div class="new-notes">
+                    <form id="editNoteForm" method="POST">
+                        <input type="hidden" name="note_id" value="${noteId}">
+                        <div class="mb-3">
+                            <label for="title" class="form-label">Title</label>
+                            <input type="text" class="form-control" name="title" value="${title}">
+                        </div>
+                        <div class="mb-3">
+                            <label for="description" class="form-label">Description</label>
+                            <input type="text" class="form-control" name="description" value="${description}">
+                        </div>
+                        <div class="mb-3">
+                            <label for="body" class="form-label">Body</label>
+                            <textarea class="form-control" name="body" rows="3">${body}</textarea>
+                        </div>
+                        <div class="d-flex">
+                            <button class="btn btn-outline-info confirmNote">Save</button>
+                            <button class="btn btn-outline-danger cancelNote">Cancel</button>
+                        </div>
+                    </form>
+                </div>`;
+            const editNoteForm = document.querySelector('#editNoteForm')
+            editNoteForm.addEventListener('submit', async (e) => {
+                e.preventDefault()
+
+                const formData = new FormData(editNoteForm)
+                console.log(formData)
+            try {
+                const res = await fetch('http://127.0.0.1:9000/api/update_note', {method: 'POST', body: formData});
+                if (res.ok) {
+                    console.log('Note updated successfully');
+                    await showNoteDetails(noteId);
+                } else {
+                    console.error('Error updating note', res.status, res.statusText);
+                }
+            } catch (err) {
+                console.error('Error sending update request', err);
+            }
+
+            })
+        })
+
+        const cancelButton = document.querySelector('.cancelNote');
+        cancelButton.addEventListener('click', (e) => {
+            e.preventDefault(); // To prevent any default action
+            noteDetailsContainer.innerHTML = ''; // Clear the container
+        });
+    } catch (err) {
         console.log(err)
     }
 }

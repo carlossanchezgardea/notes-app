@@ -17,7 +17,10 @@ def new_folder():
 @app.route("/api/load_folders")
 def get_raw_folders():
     user_id = session['user_id']
+    print(user_id)
     data = {
         'user_id': user_id
     }
     return jsonify(Folder.get_all_folders_raw(data))
+
+

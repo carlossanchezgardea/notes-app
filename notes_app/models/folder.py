@@ -45,11 +45,4 @@ class Folder:
         folder_id = connectToMySQL(DATABASE).query_db(query, data)
         return folder_id
 
-# dataset = {
-#     'user_id': 1
-# }
-#
-# # Folder.create_folder(dataset)
-#
-# user_folder = Folder.get_all_folders(dataset)
-# print(user_folder[0].__dict__)
+

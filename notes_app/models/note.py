@@ -59,11 +59,35 @@ class Note:
         else:
             return "No note found"
 
+    @classmethod
+    def update_note(cls, data):
+        query = "UPDATE notes SET title = %(title)s, description = %(description)s, body = %(body)s WHERE id = %(id)s"
+        return connectToMySQL(DATABASE).query_db(query, data)
+
 
 # info = {
 #     'id': 35,
 #     'user_id': 5
 # }
+# res = {
+#     'id': 35,
+#     'dtype': 'user_get',
+#     'title': 'Testing space',
+#     'description': 'Notes should be able to have blocks',
+#     'body': 'This should be the first block of the note.\r\nThis is a new line on the first block. \r\n\r\nThis is another block.\r\nSecond line on second block.',
+#     'user_id': 5
+# }
 #
 # note_check = Note.get_one_note(info)
-# print(note_check.title)
+# print(note_check)
+
+# updates = {
+#     'id': 35,
+#     'dtype': 'user_get',
+#     'title': 'Testing Update',
+#     'description': 'Notes should be able to have blocks',
+#     'body': 'This should be the first block of the note.\r\nThis is a new line on the first block. \r\n\r\nThis is another block.\r\nSecond line on second block.',
+#     'user_id': 5
+# }
+#
+# note_update = Note.update_note(updates)
